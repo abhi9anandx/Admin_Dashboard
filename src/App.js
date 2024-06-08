@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme, GlobalStyles } from './theme';
+import Layout from './components/Layout';
+import styled from 'styled-components';
+import { Button } from '@mui/material';
 
-function App() {
+const ThemeToggleBtn = styled(Button)`
+  position: fixed;
+  top: 10px;
+  right: 10px;
+`;
+
+const App = () => {
+  const [theme, setTheme] = useState('light');
+
+  const themeToggler = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <>
+        <GlobalStyles />
+        <ThemeToggleBtn variant="contained" onClick={themeToggler}>
+          Switch Theme
+        </ThemeToggleBtn>
+        <Layout />
+      </>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
